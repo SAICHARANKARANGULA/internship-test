@@ -1,0 +1,63 @@
+
+/** TO IMPORT main.csv DATA TO THE MYSQL DATABASE**/
+
+ALTER TABLE main DISABLE KEYS;
+LOAD DATA INFILE 'C:/Users/Personal/Desktop/bungee/internship-test-master/input/main.csv'
+INTO TABLE main
+CHARACTER SET UTF8
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+ALTER TABLE main ENABLE KEYS ;
+
+/** or we can directly import data from phpMyAdmin by selecting the required data file**/
+
+.............................................................................................
+
+/** QUERRY FOR records where country contains the word USA**/
+
+
+SELECT * FROM `main`WHERE COUNTRY like '%USA%';
+
+
+...............................................................................................
+
+
+/** TO IMPORT filteredcountry.csv DATA TO THE MYSQL DATABASE**/
+
+
+ALTER TABLE filteredcountry DISABLE KEYS;
+LOAD DATA INFILE 'C:/Users/Personal/Desktop/bungee/filteredCountry.csv'
+INTO TABLE filteredcountry
+CHARACTER SET UTF8
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+ALTER TABLE filteredcountry ENABLE KEYS ;
+
+/** or we can directly import data from phpMyAdmin by selecting the required data file**/
+
+
+...............................................................................................................
+
+
+
+/** QUERRY FOR records each group of "SKU" find 2 minimum prices**/
+
+
+
+SELECT  firstmin.SKU,firstmin.FIRST_MINIMUM_PRICE,secondmin.SECOND_MINIMUM_PRICE
+
+FROM 
+
+(SELECT SKU, MIN(PRICE) AS FIRST_MINIMUM_PRICE FROM filteredcountry GROUP BY SKU) as firstmin 
+
+INNER JOIN
+
+(SELECT SKU, MIN(PRICE) AS SECOND_MINIMUM_PRICE FROM filteredcountry AS f WHERE PRICE > (SELECT MIN(PRICE) FROM filteredcountry AS f1 WHERE f.SKU=f1.SKU GROUP by SKU) GROUP BY SKU) as secondmin 
+
+ON 
+firstmin.SKU=secondmin.SKU;
+
+
+.........................................................................................................
