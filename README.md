@@ -1,1 +1,10 @@
-Problem statement is defined in the file "Bungee Coding Round.docx". Please refer to this file. 
+Bungee Coding Round
+
+Name : Sai Charan Karangula
+
+Reg.no : 17MIS0419
+
+Email : karangulasai123@gmail.com
+
+
+Language Used : MYSQL
